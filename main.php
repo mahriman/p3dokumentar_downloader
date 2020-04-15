@@ -153,6 +153,23 @@ foreach($podcasts_to_download as $item){
           echo "Fatal error, exiting (4)!";
           exit(4);
         }
+        else 
+        {
+          if($change_id3_tags === TRUE) 
+          {
+            echo "[info] Setting id3v2 tags: artist(\"".$id3_artist."\"), album(\"".$id3_album."\"), year(\"".$download_year."\"), genres(\"".$id3_genres."\"), title(\"".$item['pubdate']." - ".$item['title']."\")\n"; 
+            exec($eyed3_path . " -2 -a \"" . $id3_artist . "\" -A \"" . $id3_album . "\" -G " . $id3_genres . " -Y " . $download_year . " -t \"" . $item['pubdate'] . " - " . $item['title'] . "\" --remove-v1 --non-std-genres \"" . $download_path."/".$download_year."/".$download_filename . "\"", $eyed3_output, $eyed3_exit_status); 
+            if($eyed3_exit_status !== 0)
+            {
+              echo "[!] eyeD3 exited with non-zero exit code:\n";
+              foreach($eyed3_output as $error_output)
+              {
+                echo $error_output;
+              }
+              echo "Warning: id3 tag not updated, continuing.\n";
+            }
+          }
+        }
     }
 }
 
