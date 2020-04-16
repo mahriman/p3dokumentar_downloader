@@ -54,7 +54,7 @@ foreach($rss_xml->channel->children() as $podcast) {
         $podcast_title = preg_replace('/P3 Dokumentär /', '', $podcast_title);
 
         // Ta bort "YYYY-mm-dd kl. xx.yy" från titeln
-        $podcast_title = preg_replace('/[0-9]{4}-[0-9]{2}-[0-9]{2} kl. [0-9]{2}\.[0-9]{2}/', '', $podcast_title);
+        $podcast_title = preg_replace('/ [0-9]{4}-[0-9]{2}-[0-9]{2} kl. [0-9]{2}\.[0-9]{2}/', '', $podcast_title);
 
         // Flytta "nyhetsspecial: " till slutet av titeln
         $podcast_title = preg_replace('/(nyhetsspecial): (.*)/i', '\2 - \1', $podcast_title);
