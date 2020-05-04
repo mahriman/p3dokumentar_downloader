@@ -125,27 +125,27 @@ foreach($podcasts_to_download as $item){
     }
 
     // Kontrollera att $download_path/<årtal> finns, annars försök skapa den
-    if(!is_dir($download_path."/".$download_year))
+    if(!is_dir($download_path."/Disc ".$download_year))
     {
-      echo "[info] Directory '" . $download_path."/".$download_year . "' does not exist, creating...\n";
-      exec("mkdir -p \"" . $download_path."/".$download_year . "\"", $output, $exit_status); 
+      echo "[info] Directory '" . $download_path."/Disc ".$download_year . "' does not exist, creating...\n";
+      exec("mkdir -p \"" . $download_path."/Disc ".$download_year . "\"", $output, $exit_status); 
       if($exit_status !== 0)
       {
-        echo "[!] Unable to create directory '" . $download_path."/".$download_year . "', exiting (3)!\n";
+        echo "[!] Unable to create directory '" . $download_path."/Disc ".$download_year . "', exiting (3)!\n";
         exit(3);
       }
     }
 
-    if(file_exists($download_path."/".$download_year."/".$download_filename ))
+    if(file_exists($download_path."/Disc ".$download_year."/".$download_filename ))
     {
         $continue = false;
-        echo "[info] '" . $download_path."/".$download_year."/".$download_filename . "' already downloaded, skipping... \n";
+        echo "[info] '" . $download_path."/Disc ".$download_year."/".$download_filename . "' already downloaded, skipping... \n";
     }
     
     if($continue == true)
     {
-        echo "[+] Downloading '". $download_filename . "' to " . $download_path."/".$download_year . "...\n";
-        exec("wget --quiet --no-check-certificate -O \"" . $download_path."/".$download_year . "/" . $download_filename . "\"" . " " . $item['link'], $download_output, $download_exit_status);
+        echo "[+] Downloading '". $download_filename . "' to " . $download_path."/Disc ".$download_year . "...\n";
+        exec("wget --quiet --no-check-certificate -O \"" . $download_path."/Disc ".$download_year . "/" . $download_filename . "\"" . " " . $item['link'], $download_output, $download_exit_status);
         if($download_exit_status !== 0)
         {
           echo "[!] wget exited with non-zero exit code:\n";
@@ -161,7 +161,7 @@ foreach($podcasts_to_download as $item){
           if($change_id3_tags === TRUE) 
           {
             echo "[info] Setting id3v2 tags: artist(\"".$id3_artist."\"), album(\"".$id3_album."\"), year(\"".$download_year."\"), genres(\"".$id3_genres."\"), title(\"".$item['pubdate']." - ".$item['title']."\")\n"; 
-            exec($eyed3_path . " -2 -a \"" . $id3_artist . "\" -A \"" . $id3_album . "\" -G " . $id3_genres . " -Y " . $download_year . " -t \"" . $item['pubdate'] . " - " . $item['title'] . "\" --remove-v1 --non-std-genres \"" . $download_path."/".$download_year."/".$download_filename . "\"", $eyed3_output, $eyed3_exit_status); 
+            exec($eyed3_path . " -2 -n 0 --encoding utf8 -a \"" . $id3_artist . "\" -A \"" . $id3_album . "\" -G " . $id3_genres . " -Y " . $download_year . " -t \"" . $item['pubdate'] . " - " . $item['title'] . "\" --remove-v1 --non-std-genres \"" . $download_path."/Disc ".$download_year."/".$download_filename . "\"", $eyed3_output, $eyed3_exit_status); 
             if($eyed3_exit_status !== 0)
             {
               echo "[!] eyeD3 exited with non-zero exit code:\n";
