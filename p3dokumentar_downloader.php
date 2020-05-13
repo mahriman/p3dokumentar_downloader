@@ -20,7 +20,7 @@ $download_path = "/datastore-mirrored/Music/mp3/Sveriges Radio/P3 Dokumentär";
 # URL till P3 Dokumentärs XML-fil. 
 $rss_url = "https://api.sr.se/api/rss/pod/3966";
 # Framtidssäkrat antal avsnitt att ladda ner :) 
-$n_podcasts_to_download = 1000;
+$n_podcasts_to_download = 3000;
 # Sätt id3-taggar
 $change_id3_tags = TRUE;
 $eyed3_path = "/usr/local/bin/eyeD3";
