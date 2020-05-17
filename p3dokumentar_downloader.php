@@ -15,7 +15,7 @@
 
 // Base path, var php-filerna finns och xml-filen laddas ner. 
 $data_folder = "/home/dir-admins/mahriman/scripts/p3dokumentar_downloader";
-// I $download_path läggs alla avsnitt i $download_path/<årtal>/<episod>.mp3 
+// I $download_path läggs alla avsnitt i $download_path/P3 Dokumentär <årtal>/<episod>.mp3 
 $download_path = "/datastore-mirrored/Music/mp3/Sveriges Radio";
 # URL till P3 Dokumentärs XML-fil. 
 $rss_url = "https://api.sr.se/api/rss/pod/3966";
