@@ -35,17 +35,21 @@ foreach($rss_xml->channel->children() as $podcast) {
         # Hämta inte om titeln är tom
         if($podcast_title === "") { continue; }
 
-        // Hämta inte PODDTIPS, NY PODD, VÅRENS SLÄPP, KOMMANDE P3 DOKUMENTÄRER
+        // Hämta inte reklamavsnitt
         if(preg_match('/PODDTIPS/', $podcast_title)) { continue; }
         if(preg_match('/NY PODD/', $podcast_title)) { continue; }
         if(preg_match('/VÅRENS SLÄPP/', $podcast_title)) { continue; }
         if(preg_match('/KOMMANDE P3 DOKUMENTÄRER/', $podcast_title)) { continue; }
+        if(preg_match('/- Poddtrailer/', $podcast_title)) { continue; }
 
         // Ta bort överflödiga whitespaces i början och slutet av titeln
         $podcast_title = ltrim(rtrim($podcast_title));
 
         // Hämta inte avsnittet med titeln "P3 Dokumentär 2015-04-12 kl. 18.03" som är en repris av DC 3an-avsnittet (avsnitt 897557)
         if(preg_match('/P3 Dokumentär 2015-04-12 kl. 18.03/', $podcast_title)) { continue; }
+
+        // Byt ut namn på avsnitt som heter *NY* <avsnittsnamn>
+        $podcast_title = str_replace('*NY* ', '', $podcast_title);
 
         // Byt ut namn till egenpåhittade för avsnitt som saknar titel
         $podcast_title = preg_replace('/P3 Dokumentär 2016-01-10 kl. 18.03/', 'Stormen Gudrun och skogsskadorna', $podcast_title);
@@ -160,7 +164,7 @@ foreach($podcasts_to_download as $item){
         {
           if($change_id3_tags === TRUE) 
           {
-            echo "[info] Setting id3v2 tags: artist(\"".$id3_artist."\"), album(\"".$id3_album."\"), year(\"".$download_year."\"), genres(\"".$id3_genres."\"), title(\"".$item['pubdate']." - ".$item['title']."\")\n"; 
+            echo "[info] Setting id3v2 tags: artist(\"".$id3_artist."\"), album(\"".$id3_album." ".$download_year."\"), year(\"".$download_year."\"), genres(\"".$id3_genres."\"), title(\"".$item['pubdate']." - ".$item['title']."\")\n"; 
             exec($eyed3_path . " -2 -n 0 --encoding utf8 -a \"" . $id3_artist . "\" -A \"" . $id3_album . "\" -G " . $id3_genres . " -Y " . $download_year . " -t \"" . $item['pubdate'] . " - " . $item['title'] . "\" --remove-v1 --non-std-genres \"" . $download_path."/P3 Dokumentär ".$download_year."/".$download_filename . "\"", $eyed3_output, $eyed3_exit_status); 
             if($eyed3_exit_status !== 0)
             {
