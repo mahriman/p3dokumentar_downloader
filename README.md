@@ -8,4 +8,4 @@ Based on [PHP-RSS-Podcast-Downloader by Meridien](https://github.com/Meridien/PH
 2. Edit settings in *p3dokumentar_downloader.php*
 3. Run with `php p3dokumentar_downloader.php`
 
-Files are saved in $download\_folder/YYYY/YYYYmmdd - Episode title.mp3
+Files are saved in $download\_path/P3 Dokumentär \<year\>/\<episode\>.mp3
